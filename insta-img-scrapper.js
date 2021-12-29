@@ -28,7 +28,8 @@ const ImageScrapper = async (originalURL) => {
     const username = "calmnessmotiv@gmail.com";
     const password = "instagramimagedownloader";
 
-    const browser = await puppeteer.launch({ headless: false });
+    // const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
     await page.goto("https://www.instagram.com/accounts/login/");
@@ -40,8 +41,8 @@ const ImageScrapper = async (originalURL) => {
     // await page.waitForSelector('.cmbtv button');
     // await page.waitForSelector('.aOOlW');
 
-    await page.type('[name="username"]', username, { delay: 100 });
-    await page.type('[name="password"]', password, { delay: 100 });
+    await page.type('[name="username"]', username);
+    await page.type('[name="password"]', password);
     await page.click('[type="submit"]');
     await page.waitForNavigation();
     // await page.click('.cmbtv button');
