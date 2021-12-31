@@ -2,6 +2,7 @@ const puppeteer = require('puppeteer');
 // const downloader = require('./insta-img-downloader')
 const fs = require('fs');
 const https = require('https');
+const nodejsDownloader = require('nodejs-file-downloader');
 
 const ImageScrapper = async (originalURL) => {
 
@@ -10,18 +11,30 @@ const ImageScrapper = async (originalURL) => {
         const filename = url.split('=')[8];
         console.log(filename);
     
-        https.get(url, (res) => {
-            const fileStream = fs.createWriteStream(`${filename}.png`);
-            res.pipe(fileStream);
+        // https.get(url, (res) => {
+        //     const fileStream = fs.createWriteStream(`${filename}.png`);
+        //     res.pipe(fileStream);
     
-            fileStream.on("finish", () => {
-                fileStream.close();
-                console.log("Download✅");
-            })
-        }).on("error", (err) => {
-            console.log("Error in downloading Image🚫");
-            console.log(err);
+        //     fileStream.on("finish", () => {
+        //         fileStream.close();
+        //         console.log("Download✅");
+        //     })
+        // }).on("error", (err) => {
+        //     console.log("Error in downloading Image🚫");
+        //     console.log(err);
+        // })
+
+        const downloader = new nodejsDownloader({
+            url: url,
+            directory: `./Downloads`
         })
+
+        try {
+            await downloader.download();
+        } catch (error) {
+            console.log("Unable to download :(");
+            console.log(error);
+        }
     
     }
 
